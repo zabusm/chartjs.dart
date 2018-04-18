@@ -813,6 +813,9 @@ abstract class TickOptions<T> {
   external set maxTicksLimit(num v);
   external bool get showLabelBackdrop;
   external set showLabelBackdrop(bool v);
+  external factory TickOptions({
+    dynamic max
+});
 }
 
 @anonymous
@@ -1076,7 +1079,11 @@ abstract class ChartXAxe implements CommonAxe {
 /// tslint:disable-next-line no-empty-interface
 @anonymous
 @JS()
-abstract class ChartYAxe implements CommonAxe {}
+abstract class ChartYAxe implements CommonAxe {
+  external factory ChartYAxe({
+    TickOptions ticks
+});
+}
 
 @anonymous
 @JS()
