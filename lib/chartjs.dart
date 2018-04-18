@@ -400,6 +400,9 @@ abstract class ChartLegendOptions {
   external set labels(ChartLegendLabelOptions v);
   external bool get reverse;
   external set reverse(bool v);
+  external factory ChartLegendOptions({
+    bool display
+  });
 }
 
 @anonymous
