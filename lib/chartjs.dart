@@ -536,6 +536,7 @@ abstract class ChartAnimationOptions {
   external set easing(String v);
   external void onProgress(dynamic chart);
   external void onComplete(dynamic chart);
+  external factory ChartAnimationOptions();
 }
 
 @anonymous
