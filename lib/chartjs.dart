@@ -500,6 +500,7 @@ abstract class ChartTooltipOptions {
       dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ v);
   external num get borderWidth;
   external set borderWidth(num v);
+  external factory ChartTooltipOptions(),  
 }
 
 @anonymous
