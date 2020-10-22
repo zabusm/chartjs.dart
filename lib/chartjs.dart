@@ -24,10 +24,6 @@ import 'src/func.dart';
 /// TypeScript Version: 2.3
 @JS()
 class Chart {
-  // @Ignore
-  Chart.fakeConstructor$();
-  //external static dynamic get Chart;
-  //external static set Chart(dynamic v);
   external factory Chart(
       dynamic /*String|CanvasRenderingContext2D|CanvasElement|ArrayLike<CanvasRenderingContext2D|CanvasElement>*/ context,
       ChartConfiguration options);
@@ -81,8 +77,6 @@ class Chart {
 
 @JS()
 class PluginServiceStatic {
-  // @Ignore
-  PluginServiceStatic.fakeConstructor$();
   external void register([PluginServiceRegistrationOptions plugin]);
 }
 
@@ -401,9 +395,14 @@ abstract class ChartLegendOptions {
   external set labels(ChartLegendLabelOptions v);
   external bool get reverse;
   external set reverse(bool v);
-  external factory ChartLegendOptions({
-    bool display
-  });
+  external factory ChartLegendOptions(
+      {bool display,
+      String /*'left'|'right'|'top'|'bottom'*/ position,
+      bool fullWidth,
+      void Function(MouseEvent event, ChartLegendItem legendItem) onClick,
+      void Function(MouseEvent event, ChartLegendItem legendItem) onHover,
+      ChartLegendLabelOptions labels,
+      bool reverse});
 }
 
 @anonymous
@@ -423,11 +422,54 @@ abstract class ChartLegendLabelOptions {
   external num get padding;
   external set padding(num v);
   external dynamic generateLabels(dynamic chart);
+  external factory ChartLegendLabelOptions(
+      {num boxWidth,
+      num fontSize,
+      String fontStyle,
+      dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ fontColor,
+      String fontFamily,
+      num padding,
+      dynamic Function(dynamic chart) generateLabels});
 }
 
 @anonymous
 @JS()
 abstract class ChartTooltipOptions {
+  external factory ChartTooltipOptions(
+      {bool enabled,
+      String mode,
+      bool intersect,
+      dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ backdropColor,
+      String titleFontFamily,
+      String titleFontStyle,
+      num titleFontSize,
+      dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ titleFontColor,
+      num titleSpacing,
+      num titleMarginBottom,
+      String bodyFontFamily,
+      num bodyFontSize,
+      String bodyFontStyle,
+      dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ bodyFontColor,
+      num bodySpacing,
+      String footerFontFamily,
+      num footerFontSize,
+      String footerFontStyle,
+      dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ footerFontColor,
+      num footerSpacing,
+      num footerMarginTop,
+      num xPadding,
+      num yPadding,
+      num caretSize,
+      num cornerRadius,
+      String multiKeyBackground,
+      ChartTooltipCallback callbacks,
+      bool filter(ChartTooltipItem item),
+      num itemSort(ChartTooltipItem itemA, ChartTooltipItem itemB),
+      String /*'average'|'nearest'*/ position,
+      num caretPadding,
+      bool displayColors,
+      dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ borderColor,
+      num borderWidth});
   external bool get enabled;
   external set enabled(bool v);
   external void custom(dynamic a);
@@ -500,7 +542,6 @@ abstract class ChartTooltipOptions {
       dynamic /*String|CanvasGradient|CanvasPattern|List<String>*/ v);
   external num get borderWidth;
   external set borderWidth(num v);
-  external factory ChartTooltipOptions({dynamic custom, bool enabled});
 }
 
 @anonymous
@@ -513,6 +554,11 @@ abstract class ChartHoverOptions {
   external bool get intersect;
   external set intersect(bool v);
   external void onHover(dynamic active);
+  external factory ChartHoverOptions(
+      {String mode,
+      num animationDuration,
+      bool intersect,
+      void Function(dynamic active) onHover});
 }
 
 @anonymous
@@ -538,7 +584,6 @@ abstract class ChartAnimationOptions {
   external set easing(String v);
   external void onProgress(dynamic chart);
   external void onComplete(dynamic chart);
-  external factory ChartAnimationOptions();
 }
 
 @anonymous
@@ -816,9 +861,6 @@ abstract class TickOptions<T> {
   external set maxTicksLimit(num v);
   external bool get showLabelBackdrop;
   external set showLabelBackdrop(bool v);
-  external factory TickOptions({
-    dynamic max
-});
 }
 
 @anonymous
@@ -857,11 +899,17 @@ abstract class PointLabelOptions {
 abstract class LinearTickOptions implements TickOptions<num> {
   external bool get beginAtZero;
   external set beginAtZero(bool v);
+  @override
   external num get min;
+  @override
   external set min(num v);
+  @override
   external num get max;
+  @override
   external set max(num v);
+  @override
   external num get maxTicksLimit;
+  @override
   external set maxTicksLimit(num v);
   external num get stepSize;
   external set stepSize(num v);
@@ -874,9 +922,13 @@ abstract class LinearTickOptions implements TickOptions<num> {
 @anonymous
 @JS()
 abstract class LogarithmicTickOptions implements TickOptions<num> {
+  @override
   external num get min;
+  @override
   external set min(num v);
+  @override
   external num get max;
+  @override
   external set max(num v);
 }
 
@@ -1077,21 +1129,46 @@ abstract class ChartXAxe implements CommonAxe {
   external set barPercentage(num v);
   external TimeScale get time;
   external set time(TimeScale v);
+  external factory ChartXAxe(
+      {String /*'category'|'linear'|'logarithmic'|'time'|'radialLinear'|String*/ type,
+      bool display,
+      String id,
+      bool stacked,
+      String position,
+      TickOptions ticks,
+      GridLineOptions gridLines,
+      num barThickness,
+      ScaleTitleOptions scaleLabel,
+      num categoryPercentage,
+      num barPercentage,
+      TimeScale time});
 }
 
 /// tslint:disable-next-line no-empty-interface
 @anonymous
 @JS()
 abstract class ChartYAxe implements CommonAxe {
-  external factory ChartYAxe({
-    TickOptions ticks
-});
+  external factory ChartYAxe(
+      {String /*'category'|'linear'|'logarithmic'|'time'|'radialLinear'|String*/ type,
+      bool display,
+      String id,
+      bool stacked,
+      String position,
+      TickOptions ticks,
+      GridLineOptions gridLines,
+      num barThickness,
+      ScaleTitleOptions scaleLabel,
+      num categoryPercentage,
+      num barPercentage,
+      TimeScale time});
 }
 
 @anonymous
 @JS()
 abstract class LinearScale implements ChartScales<LinearTickOptions> {
+  @override
   external LinearTickOptions get ticks;
+  @override
   external set ticks(LinearTickOptions v);
   external factory LinearScale(
       {LinearTickOptions ticks,
@@ -1107,7 +1184,9 @@ abstract class LinearScale implements ChartScales<LinearTickOptions> {
 @anonymous
 @JS()
 abstract class LogarithmicScale implements ChartScales<LogarithmicTickOptions> {
+  @override
   external LogarithmicTickOptions get ticks;
+  @override
   external set ticks(LogarithmicTickOptions v);
   external factory LogarithmicScale(
       {LogarithmicTickOptions ticks,
